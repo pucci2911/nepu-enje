@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bez cigareta</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #1D9E75;
+    --green-light: #E1F5EE;
+    --green-mid: #5DCAA5;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --text: #1a1a1a;
+    --text-muted: #666;
+    --text-hint: #999;
+    --border: rgba(0,0,0,0.1);
+    --surface: #f5f3ef;
+    --card: #fff;
+  }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2.5rem 1.5rem;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px; right: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(29,158,117,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .header .icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .header h1 span {
+    color: var(--green);
+  }
+
+  .header p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-top: 0.4rem;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+    max-width: 700px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+  }
+
+  .stat-card.highlight {
+    background: var(--green);
+    border-color: transparent;
+    color: #fff;
+  }
+
+  .stat-card.highlight .stat-label,
+  .stat-card.highlight .stat-sub { color: rgba(255,255,255,0.7); }
+
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-sub {
+    font-size: 0.72rem;
+    color: var(--text-hint);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .progress-wrap {
+    width: 100%;
+    max-width: 700px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .progress-header span {
+    font-size: 0.75rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--text-muted);
+  }
+
+  .progress-header strong {
+    font-size: 0.75rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--green);
+  }
+
+  .progress-bg {
+    background: var(--green-light);
+    border-radius: 8px;
+    height: 8px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 8px;
+    transition: width 1s ease;
+  }
+
+  .table-section {
+    width: 100%;
+    max-width: 700px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .table-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 0.75rem;
+  }
+
+  .table-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  thead th {
+    background: #f9f8f5;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+
+  tbody td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  tbody tr.row-past td { color: var(--text); }
+
+  tbody tr.row-current {
+    background: #f0fdf7;
+  }
+  tbody tr.row-current td {
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    padding: 2px 7px;
+    border-radius: 20px;
+    background: var(--green-light);
+    color: var(--green);
+    margin-left: 6px;
+    vertical-align: middle;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .milestone {
+    display: inline-block;
+    font-size: 0.6rem;
+    padding: 2px 7px;
+    border-radius: 20px;
+    background: var(--amber-light);
+    color: var(--amber);
+    margin-left: 4px;
+    vertical-align: middle;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+  }
+
+  .footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--text-hint);
+    font-family: 'DM Mono', monospace;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 500px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stats-grid .stat-card:last-child { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="icon">🚭</span>
+  <h1>Bez cigareta <span>= pare u džepu</span></h1>
+  <p id="start-label">od 31.03.2026. u 22:00</p>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card highlight">
+    <div class="stat-label">Vreme bez cigareta</div>
+    <div class="stat-value" id="elapsed">0h 0m</div>
+    <div class="stat-sub" id="days-label">danas</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Uštedeo si</div>
+    <div class="stat-value" id="saved">0 RSD</div>
+    <div class="stat-sub" id="cig-count">0 cigareta manje</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Sledeća uštevina</div>
+    <div class="stat-value" id="next-save">18 RSD</div>
+    <div class="stat-sub" id="next-in">za 60 min</div>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-header">
+    <span>napredak tekućeg sata</span>
+    <strong id="progress-pct">0%</strong>
+  </div>
+  <div class="progress-bg">
+    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+</div>
+
+<div class="table-section">
+  <div class="table-title">Statistika po satima</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Sat</th>
+          <th>Po satu (RSD)</th>
+          <th>Cigareta manje</th>
+          <th>Ukupno (RSD)</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">osvežava se svakih 60 sekundi &nbsp;·&nbsp; drži se! 💪</div>
+
+<script>
+const START = new Date('2026-03-31T22:00:00');
+const RSD_PER_HOUR = 440 / 24;
+const CIGS_PER_HOUR = 20 / 24;
+
+const MILESTONES = {
+  24: '1 dan!',
+  48: '2 dana!',
+  72: '3 dana!',
+  168: '1 nedelja!',
+  336: '2 nedelje!',
+  720: '1 mesec!'
+};
+
+function fmt(n, dec = 0) {
+  return n.toLocaleString('sr-RS', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+}
+
+function formatDuration(ms) {
+  const totalMins = Math.floor(ms / 60000);
+  const h = Math.floor(totalMins / 60);
+  const m = totalMins % 60;
+  return h + 'h ' + m + 'm';
+}
+
+function update() {
+  const now = new Date();
+  const elapsedMs = now - START;
+  if (elapsedMs < 0) { document.getElementById('elapsed').textContent = 'Uskoro!'; return; }
+
+  const elapsedHours = elapsedMs / 3600000;
+  const completedHours = Math.floor(elapsedHours);
+  const frac = elapsedHours - completedHours;
+  const days = Math.floor(elapsedMs / 86400000);
+
+  document.getElementById('elapsed').textContent = formatDuration(elapsedMs);
+  document.getElementById('days-label').textContent = days === 0 ? 'danas' : days + (days === 1 ? ' dan' : ' dana');
+  document.getElementById('saved').textContent = fmt(elapsedHours * RSD_PER_HOUR) + ' RSD';
+  document.getElementById('cig-count').textContent = fmt(elapsedHours * CIGS_PER_HOUR, 1) + ' cigareta manje';
+  document.getElementById('next-save').textContent = fmt(RSD_PER_HOUR) + ' RSD';
+  document.getElementById('next-in').textContent = 'za ' + Math.ceil((1 - frac) * 60) + ' min';
+  const pct = Math.round(frac * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+
+  const tbody = document.getElementById('table-body');
+  const showHours = Math.max(completedHours + 3, 24);
+  const displayHours = Math.min(showHours, 24 * 14);
+
+  tbody.innerHTML = '';
+  for (let h = 1; h <= displayHours; h++) {
+    const tr = document.createElement('tr');
+    const isCurrent = h === completedHours + 1;
+    const isPast = h <= completedHours;
+    tr.className = isCurrent ? 'row-current' : isPast ? 'row-past' : '';
+
+    let label;
+    if (h % 24 === 0) label = (h / 24) + '. dan';
+    else if (h < 24) label = h + '. sat';
+    else label = Math.floor(h / 24) + 'd ' + (h % 24) + 'h';
+
+    const badge = isCurrent ? '<span class="badge">sada</span>' : '';
+    const ms = MILESTONES[h] ? '<span class="milestone">' + MILESTONES[h] + '</span>' : '';
+
+    tr.innerHTML = `
+      <td>${label}${badge}${ms}</td>
+      <td>+ ${fmt(RSD_PER_HOUR, 1)} RSD</td>
+      <td>${fmt(h * CIGS_PER_HOUR, 1)}</td>
+      <td>${fmt(h * RSD_PER_HOUR, 0)} RSD</td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  const cur = tbody.querySelector('.row-current');
+  if (cur) cur.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+update();
+setInterval(update, 60000);
+</script>
+</body>
+</html>
