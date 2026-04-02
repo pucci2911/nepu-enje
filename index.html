@@ -47,7 +47,12 @@
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
   .table-section { width: 100%; max-width: 700px; animation: fadeUp 0.6s 0.3s ease both; }
   .table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow-x: auto; }
-  table { min-width: 560px; }
+  table { min-width: 420px; width: 100%; }
+  @media (max-width: 600px) {
+    table { min-width: unset; font-size: 0.75rem; }
+    thead th, tbody tr td { padding: 8px 10px; }
+    .col-ukupno { display: none; }
+  }
   table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
   thead th { background: #f9f8f5; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-family: 'DM Mono', monospace; padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 400; }
   tbody tr td { padding: 10px 16px; border-bottom: 1px solid var(--border); font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-hint); }
@@ -77,13 +82,13 @@
 </style>
 </head>
 <body>
-
+ 
 <div class="header">
   <span class="icon">🚭</span>
   <h1>Bez cigareta <span>= pare u džepu</span></h1>
   <p>od utorka, 31.03.2026. u 22:00</p>
 </div>
-
+ 
 <div class="stats-grid">
   <div class="stat-card highlight">
     <div class="stat-label">Vreme bez cigareta</div>
@@ -101,7 +106,7 @@
     <div class="stat-sub" id="next-in">za 60 min</div>
   </div>
 </div>
-
+ 
 <div class="progress-wrap">
   <div class="progress-header">
     <span><span class="pulse-dot"></span>napredak tekućeg sata</span>
@@ -111,7 +116,7 @@
     <div class="progress-fill" id="progress-fill" style="width:0%"></div>
   </div>
 </div>
-
+ 
 <div class="live-section">
   <div class="section-title"><span class="pulse-dot"></span>Ušteđevina u toku — raste u realnom vremenu</div>
   <div class="live-grid">
@@ -138,7 +143,7 @@
     </div>
   </div>
 </div>
-
+ 
 <div class="table-section">
   <div class="section-title">Istorija po periodima</div>
   <div class="table-wrap">
@@ -148,34 +153,34 @@
           <th>Dan / Period</th>
           <th>Ušteđevina u periodu</th>
           <th>Cigareta manje</th>
-          <th>Ukupno u periodu</th>
+          <th class="col-ukupno">Ukupno u periodu</th>
         </tr>
       </thead>
       <tbody id="tbody"></tbody>
     </table>
   </div>
 </div>
-
+ 
 <div class="footer">osvežava se svakih 10 sekundi &nbsp;·&nbsp; drži se! 💪</div>
-
+ 
 <script>
 (function() {
-
+ 
   var START    = new Date('2026-03-31T22:00:00');
   var RPH      = 440 / 24;
   var CPH      = 20  / 24;
   var RPD      = 440;
   var CPD      = 20;
   var lastHour = -1;
-
+ 
   // Prikazuj X godina unapred od danas
   var YEARS_AHEAD = 5;
-
+ 
   var DANI    = ['Ned','Pon','Uto','Sre','Čet','Pet','Sub'];
   var MES_NOM = ['Januar','Februar','Mart','April','Maj','Jun','Jul','Avgust','Septembar','Oktobar','Novembar','Decembar'];
-
+ 
   function daysInMonth(y, m) { return new Date(y, m + 1, 0).getDate(); }
-
+ 
   function fmt(n, d) {
     d = (d === undefined) ? 0 : d;
     return n.toLocaleString('sr-RS', {minimumFractionDigits: d, maximumFractionDigits: d});
@@ -204,14 +209,14 @@
     return '';
   }
   function dim() { return '<span class="dim">—</span>'; }
-
+ 
   // Koliko ms je ostvareno između dva datuma, ali ne pre START
   function earnedMs(from, to, now) {
     var ef = Math.max(START, from);
     var et = Math.min(now, to);
     return Math.max(0, et - ef);
   }
-
+ 
   function toggle(gid) {
     var btn  = document.querySelector('[data-gid="' + gid + '"]');
     var open = btn && btn.dataset.open === '1';
@@ -228,30 +233,30 @@
       var ic = btn.querySelector('.ti'); if (ic) ic.textContent = open ? '▶' : '▼';
     }
   }
-
+ 
   function mkrow(cells, cls, gid, pid, tog) {
     var tr = document.createElement('tr');
     var c = cls;
     if (pid) { tr.dataset.pid = pid; c += ' child'; }
     if (gid) tr.dataset.gid = gid;
     tr.className = c;
-    cells.forEach(function(h) { var td = document.createElement('td'); td.innerHTML = h; tr.appendChild(td); });
+    cells.forEach(function(h, i) { var td = document.createElement('td'); td.innerHTML = h; if (i === cells.length - 1) td.className = 'col-ukupno'; tr.appendChild(td); });
     if (tog) tr.addEventListener('click', function() { toggle(gid); });
     return tr;
   }
-
+ 
   function buildTable(now) {
     var tbody   = document.getElementById('tbody');
     tbody.innerHTML = '';
     var today   = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     var curHRow = null;
-
+ 
     // Opseg: od 2026 do danas + YEARS_AHEAD godina
     var fromYear = 2026;
     var toYear   = now.getFullYear() + YEARS_AHEAD;
-
+ 
     for (var y = fromYear; y <= toYear; y++) {
-
+ 
       var yearStart = new Date(y, 0, 1);
       var yearEnd   = new Date(y + 1, 0, 1);
       var ygid      = 'y' + y;
@@ -259,12 +264,12 @@
       var isYDone   = (now >= yearEnd);
       var isYFut    = (now < yearStart);
       var ycls      = 'row-group' + (isYCurr ? ' active' : '') + (isYFut ? ' future' : '');
-
+ 
       // Ušteđevina SAMO u ovoj godini (ne kumulativno)
       var yEarnedMs = earnedMs(yearStart, yearEnd, now);
       var yEarned   = (yEarnedMs / 3600000) * RPH;
       var yCigs     = yEarned / RPD * CPD;
-
+ 
       var ytr = mkrow([
         '<i class="ti">▶</i>' + y + '. godina',
         isYFut ? dim() : fmt(yEarned, 0) + ' RSD',
@@ -272,16 +277,16 @@
         isYFut ? dim() : fmt(yEarned, 0) + ' RSD'
       ], ycls, ygid, null, true);
       tbody.appendChild(ytr);
-
+ 
       if (isYCurr) {
         ytr.dataset.open = '1';
         var yic = ytr.querySelector('.ti'); if (yic) yic.textContent = '▼';
       }
-
+ 
       // Meseci u godini
       var mFrom = (y === 2026) ? 2 : 0; // počinjemo od marta 2026
       for (var m = mFrom; m <= 11; m++) {
-
+ 
         // Početak meseca: mart 2026 kreće od 31.03
         var monthStart = (y === 2026 && m === 2) ? new Date(2026, 2, 31) : new Date(y, m, 1);
         var monthEnd   = new Date(y, m + 1, 1);
@@ -291,12 +296,12 @@
         var isMFut     = (now < monthStart);
         var mcls       = 'row-group' + (isMCurr ? ' active' : '') + (isMFut ? ' future' : '');
         var mbdg       = isMCurr ? '<span class="badge">ovaj mesec</span>' : '';
-
+ 
         // Ušteđevina SAMO u ovom mesecu
         var mEarnedMs = earnedMs(monthStart, monthEnd, now);
         var mEarned   = (mEarnedMs / 3600000) * RPH;
         var mCigs     = mEarned / RPD * CPD;
-
+ 
         var mtr = mkrow([
           '<i class="ti">▶</i>' + MES_NOM[m] + ' ' + y + mbdg,
           isMFut ? dim() : fmt(mEarned, 0) + ' RSD',
@@ -304,35 +309,35 @@
           isMFut ? dim() : fmt(mEarned, 0) + ' RSD'
         ], mcls, mgid, ygid, true);
         tbody.appendChild(mtr);
-
+ 
         if (isMCurr) {
           mtr.classList.add('open');
           mtr.dataset.open = '1';
           var mic = mtr.querySelector('.ti'); if (mic) mic.textContent = '▼';
         }
-
+ 
         // Dani u mesecu
         var firstDay = (y === 2026 && m === 2) ? 31 : 1;
         var lastDay  = daysInMonth(y, m);
-
+ 
         for (var dd = firstDay; dd <= lastDay; dd++) {
           var thisDate = new Date(y, m, dd);
           var nextDate = new Date(y, m, dd + 1);
           var isToday  = sameDay(thisDate, today);
           var isDDone  = (now >= nextDate);
           var isDFut   = (now < thisDate);
-
+ 
           var dcls = 'grandchild' + (isToday ? ' row-current' : isDDone ? ' row-past' : '');
-
+ 
           // Ušteđevina SAMO u ovom danu
           var dEarnedMs = earnedMs(thisDate, nextDate, now);
           var dEarned   = (dEarnedMs / 3600000) * RPH;
           var dCigs     = dEarned / RPD * CPD;
-
+ 
           var dayName = DANI[thisDate.getDay()];
           var msTag   = milestone(thisDate);
           var tbdg    = isToday ? '<span class="badge">danas</span>' : '';
-
+ 
           var dr = mkrow([
             dayName + ' ' + fmtDate(thisDate) + tbdg + msTag,
             isDFut ? dim() : fmt(dEarned, 0) + ' RSD',
@@ -340,38 +345,38 @@
             isDFut ? dim() : fmt(dEarned, 0) + ' RSD'
           ], dcls, null, mgid, false);
           tbody.appendChild(dr);
-
+ 
           if (isToday) { curHRow = dr; dr.classList.add('open'); }
           else if (isDDone) { dr.classList.add('open'); }
         }
       }
     }
-
+ 
     if (curHRow) setTimeout(function() { curHRow.scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300);
   }
-
+ 
   function updateLive(now) {
     var ms          = now - START;
     var eh          = ms / 3600000;
-
+ 
     // Danas: od ponoći
     var todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     var dayMs       = earnedMs(todayMidnight, new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1), now);
     var dayEarned   = (dayMs / 3600000) * RPH;
-
+ 
     // Ovaj mesec
     var mStart      = (now.getFullYear() === 2026 && now.getMonth() === 2) ? new Date(2026, 2, 31) : new Date(now.getFullYear(), now.getMonth(), 1);
     var mEnd        = new Date(now.getFullYear(), now.getMonth() + 1, 1);
     var monthMs     = earnedMs(mStart, mEnd, now);
     var monthEarned = (monthMs / 3600000) * RPH;
     var numDays     = daysInMonth(now.getFullYear(), now.getMonth());
-
+ 
     // Ova godina
     var yStart      = (now.getFullYear() === 2026) ? new Date(2026, 2, 31) : new Date(now.getFullYear(), 0, 1);
     var yEnd        = new Date(now.getFullYear() + 1, 0, 1);
     var yearMs      = earnedMs(yStart, yEnd, now);
     var yearEarned  = (yearMs / 3600000) * RPH;
-
+ 
     document.getElementById('lv-day').textContent   = fmt(dayEarned, 0) + ' RSD';
     document.getElementById('lv-month').textContent = fmt(monthEarned, 0) + ' RSD';
     document.getElementById('lv-year').textContent  = fmt(yearEarned, 0) + ' RSD';
@@ -384,11 +389,11 @@
     document.getElementById('lb-day').style.width   = Math.min(100, (dayMs / 86400000) * 100).toFixed(2) + '%';
     document.getElementById('lb-month').style.width = Math.min(100, (monthMs / (numDays * 86400000)) * 100).toFixed(2) + '%';
     document.getElementById('lb-year').style.width  = Math.min(100, (yearMs / (365 * 86400000)) * 100).toFixed(2) + '%';
-
+ 
     document.getElementById('live-month-label').textContent = MES_NOM[now.getMonth()] + ' ' + now.getFullYear();
     document.getElementById('live-year-label').textContent  = 'Godina ' + now.getFullYear();
   }
-
+ 
   function update() {
     var now  = new Date();
     var ms   = now - START;
@@ -397,7 +402,7 @@
     var ch   = Math.floor(eh);
     var frac = eh - ch;
     var days = Math.floor(ms / 86400000);
-
+ 
     document.getElementById('elapsed').textContent    = fmtDur(ms);
     document.getElementById('days-label').textContent = days === 0 ? 'danas' : days + (days === 1 ? ' dan' : ' dana');
     document.getElementById('saved').textContent      = fmt(eh * RPH, 0) + ' RSD';
@@ -406,14 +411,14 @@
     document.getElementById('next-in').textContent    = 'za ' + Math.ceil((1 - frac) * 60) + ' min';
     document.getElementById('progress-fill').style.width = Math.round(frac * 100) + '%';
     document.getElementById('progress-pct').textContent  = Math.round(frac * 100) + '%';
-
+ 
     updateLive(now);
     if (ch !== lastHour) { buildTable(now); lastHour = ch; }
   }
-
+ 
   update();
   setInterval(update, 10000);
-
+ 
 })();
 </script>
 </body>
