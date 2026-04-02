@@ -199,6 +199,7 @@
 <div class="footer">osvežava se svakih 10 sekundi &nbsp;·&nbsp; drži se! 💪</div>
  
 <script>
+(function(){
 const START = new Date('2026-03-31T22:00:00');
 const RPH=440/24, CPH=20/24;
 const RPD=440, CPD=20;
@@ -418,6 +419,7 @@ function update(){
  
 update();
 setInterval(update, 10000);
+})();
 </script>
 </body>
 </html>
