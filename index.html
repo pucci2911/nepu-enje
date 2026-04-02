@@ -7,69 +7,32 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
- 
   :root {
-    --green: #1D9E75;
-    --green-light: #E1F5EE;
-    --amber: #BA7517;
-    --amber-light: #FAEEDA;
-    --text: #1a1a1a;
-    --text-muted: #666;
-    --text-hint: #999;
-    --border: rgba(0,0,0,0.1);
-    --surface: #f5f3ef;
-    --card: #fff;
+    --green: #1D9E75; --green-light: #E1F5EE;
+    --amber: #BA7517; --amber-light: #FAEEDA;
+    --text: #1a1a1a; --text-muted: #666; --text-hint: #999;
+    --border: rgba(0,0,0,0.1); --surface: #f5f3ef; --card: #fff;
   }
- 
-  body {
-    font-family: 'Syne', sans-serif;
-    background: var(--surface);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2.5rem 1.5rem;
-  }
- 
-  body::before {
-    content: '';
-    position: fixed;
-    top: -200px; right: -200px;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(29,158,117,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
- 
+  body { font-family: 'Syne', sans-serif; background: var(--surface); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 2.5rem 1.5rem; }
+  body::before { content: ''; position: fixed; top: -200px; right: -200px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(29,158,117,0.08) 0%, transparent 70%); pointer-events: none; }
   .header { text-align: center; margin-bottom: 2.5rem; animation: fadeUp 0.6s ease both; }
   .header .icon { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
   .header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
   .header h1 span { color: var(--green); }
   .header p { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.4rem; font-family: 'DM Mono', monospace; }
- 
-  .stats-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-    width: 100%; max-width: 700px; margin-bottom: 1.5rem;
-    animation: fadeUp 0.6s 0.1s ease both;
-  }
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; max-width: 700px; margin-bottom: 1.5rem; animation: fadeUp 0.6s 0.1s ease both; }
   .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.25rem 1rem; text-align: center; }
   .stat-card.highlight { background: var(--green); border-color: transparent; color: #fff; }
   .stat-card.highlight .stat-label, .stat-card.highlight .stat-sub { color: rgba(255,255,255,0.7); }
   .stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; font-family: 'DM Mono', monospace; }
   .stat-value { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1; margin-bottom: 0.3rem; }
   .stat-sub { font-size: 0.72rem; color: var(--text-hint); font-family: 'DM Mono', monospace; }
- 
-  .progress-wrap {
-    width: 100%; max-width: 700px; background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
-    animation: fadeUp 0.6s 0.2s ease both;
-  }
+  .progress-wrap { width: 100%; max-width: 700px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; animation: fadeUp 0.6s 0.2s ease both; }
   .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
   .progress-header span { font-size: 0.75rem; font-family: 'DM Mono', monospace; color: var(--text-muted); }
   .progress-header strong { font-size: 0.75rem; font-family: 'DM Mono', monospace; color: var(--green); }
   .progress-bg { background: var(--green-light); border-radius: 8px; height: 8px; overflow: hidden; }
   .progress-fill { height: 100%; background: var(--green); border-radius: 8px; transition: width 1s ease; }
- 
   .live-section { width: 100%; max-width: 700px; margin-bottom: 1.5rem; animation: fadeUp 0.6s 0.25s ease both; }
   .section-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-family: 'DM Mono', monospace; margin-bottom: 0.75rem; }
   .live-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
@@ -80,10 +43,8 @@
   .live-card-value { font-size: 1.4rem; font-weight: 700; color: var(--green); letter-spacing: -0.02em; line-height: 1.1; }
   .live-card-cigs { font-size: 0.65rem; color: var(--text-hint); font-family: 'DM Mono', monospace; margin-top: 3px; }
   .live-card-of { font-size: 0.6rem; color: var(--text-hint); font-family: 'DM Mono', monospace; margin-top: 2px; }
- 
   .pulse-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-right: 5px; vertical-align: middle; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
- 
   .table-section { width: 100%; max-width: 700px; animation: fadeUp 0.6s 0.3s ease both; }
   .table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
   table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
@@ -99,16 +60,14 @@
   tbody tr.row-group.future td { color: var(--text-hint); font-weight: 400; background: var(--card); }
   tbody tr.child { display: none; }
   tbody tr.child.open { display: table-row; }
-  tbody tr.child td:first-child { padding-left: 32px; }
- 
+  tbody tr.child td:first-child { padding-left: 28px; }
+  tbody tr.grandchild td:first-child { padding-left: 52px; }
   .badge { display: inline-block; font-size: 0.6rem; padding: 2px 7px; border-radius: 20px; background: var(--green-light); color: var(--green); margin-left: 6px; vertical-align: middle; font-family: 'Syne', sans-serif; font-weight: 700; text-transform: uppercase; }
   .ms { display: inline-block; font-size: 0.6rem; padding: 2px 7px; border-radius: 20px; background: var(--amber-light); color: var(--amber); margin-left: 4px; vertical-align: middle; font-family: 'Syne', sans-serif; font-weight: 700; }
   .ti { font-style: normal; margin-right: 5px; font-size: 0.7rem; color: var(--text-hint); }
   .dim { color: var(--text-hint) !important; }
- 
   .footer { margin-top: 2rem; text-align: center; font-size: 0.7rem; color: var(--text-hint); font-family: 'DM Mono', monospace; animation: fadeUp 0.6s 0.4s ease both; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
- 
   @media (max-width: 500px) {
     .stats-grid { grid-template-columns: 1fr 1fr; }
     .stats-grid .stat-card:last-child { grid-column: 1/-1; }
@@ -117,13 +76,13 @@
 </style>
 </head>
 <body>
- 
+
 <div class="header">
   <span class="icon">🚭</span>
   <h1>Bez cigareta <span>= pare u džepu</span></h1>
-  <p>od 31.03.2026. u 22:00</p>
+  <p>od utorka, 31.03.2026. u 22:00</p>
 </div>
- 
+
 <div class="stats-grid">
   <div class="stat-card highlight">
     <div class="stat-label">Vreme bez cigareta</div>
@@ -136,12 +95,12 @@
     <div class="stat-sub" id="cig-count">0 cigareta manje</div>
   </div>
   <div class="stat-card">
-    <div class="stat-label">Sledeća uštevina</div>
+    <div class="stat-label">Sledeća ušteđevina</div>
     <div class="stat-value" id="next-save">18 RSD</div>
     <div class="stat-sub" id="next-in">za 60 min</div>
   </div>
 </div>
- 
+
 <div class="progress-wrap">
   <div class="progress-header">
     <span><span class="pulse-dot"></span>napredak tekućeg sata</span>
@@ -151,9 +110,9 @@
     <div class="progress-fill" id="progress-fill" style="width:0%"></div>
   </div>
 </div>
- 
+
 <div class="live-section">
-  <div class="section-title"><span class="pulse-dot"></span>Uštevina u toku — raste u realnom vremenu</div>
+  <div class="section-title"><span class="pulse-dot"></span>Ušteđevina u toku — raste u realnom vremenu</div>
   <div class="live-grid">
     <div class="live-card">
       <div class="live-card-label">Danas</div>
@@ -163,262 +122,297 @@
       <div class="live-bar-bg"><div class="live-bar-fill" id="lb-day"></div></div>
     </div>
     <div class="live-card">
-      <div class="live-card-label">Ovaj mesec</div>
+      <div class="live-card-label" id="live-month-label">Ovaj mesec</div>
       <div class="live-card-value" id="lv-month">0 RSD</div>
       <div class="live-card-cigs" id="lc-month">0 cigareta</div>
-      <div class="live-card-of" id="lo-month">od 13.200 RSD</div>
+      <div class="live-card-of" id="lo-month"></div>
       <div class="live-bar-bg"><div class="live-bar-fill" id="lb-month"></div></div>
     </div>
     <div class="live-card">
-      <div class="live-card-label">Ova godina</div>
+      <div class="live-card-label" id="live-year-label">Ova godina</div>
       <div class="live-card-value" id="lv-year">0 RSD</div>
       <div class="live-card-cigs" id="lc-year">0 cigareta</div>
-      <div class="live-card-of" id="lo-year">od 160.600 RSD</div>
+      <div class="live-card-of" id="lo-year"></div>
       <div class="live-bar-bg"><div class="live-bar-fill" id="lb-year"></div></div>
     </div>
   </div>
 </div>
- 
+
 <div class="table-section">
   <div class="section-title">Istorija po periodima</div>
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
-          <th>Period</th>
-          <th>Uštedeo u periodu</th>
+          <th>Dan / Period</th>
+          <th>Ušteđevina u periodu</th>
           <th>Cigareta manje</th>
-          <th>Ukupno zarađeno</th>
+          <th>Ukupno u periodu</th>
         </tr>
       </thead>
       <tbody id="tbody"></tbody>
     </table>
   </div>
 </div>
- 
+
 <div class="footer">osvežava se svakih 10 sekundi &nbsp;·&nbsp; drži se! 💪</div>
- 
+
 <script>
-(function(){
-const START = new Date('2026-03-31T22:00:00');
-const RPH=440/24, CPH=20/24;
-const RPD=440, CPD=20;
-const RPM=440*30, CPM=20*30;
-const RPY=440*365, CPY=20*365;
- 
-function fmt(n,d=0){ return n.toLocaleString('sr-RS',{minimumFractionDigits:d,maximumFractionDigits:d}); }
-function fmtDur(ms){ const m=Math.floor(ms/60000); return Math.floor(m/60)+'h '+(m%60)+'m'; }
- 
-function toggle(gid){
-  const btn=document.querySelector(`[data-gid="${gid}"]`);
-  const open=btn&&btn.dataset.open==='1';
-  document.querySelectorAll(`[data-pid="${gid}"]`).forEach(r=>{
-    open?r.classList.remove('open'):r.classList.add('open');
-    if(open&&r.dataset.gid){
-      document.querySelectorAll(`[data-pid="${r.dataset.gid}"]`).forEach(c=>c.classList.remove('open'));
-      r.dataset.open='0';
-      const ic=r.querySelector('.ti'); if(ic)ic.textContent='▶';
-    }
-  });
-  if(btn){ btn.dataset.open=open?'0':'1'; const ic=btn.querySelector('.ti'); if(ic)ic.textContent=open?'▶':'▼'; }
-}
- 
-function mkrow(cells, cls, gid, pid, tog){
-  const tr=document.createElement('tr');
-  let c=cls; if(pid){tr.dataset.pid=pid;c+=' child';} if(gid)tr.dataset.gid=gid;
-  tr.className=c;
-  cells.forEach(h=>{const td=document.createElement('td');td.innerHTML=h;tr.appendChild(td);});
-  if(tog)tr.addEventListener('click',()=>toggle(gid));
-  return tr;
-}
- 
-let lastHour=-1;
- 
-function buildTable(eh){
-  const tbody=document.getElementById('tbody');
-  tbody.innerHTML='';
-  const ch=Math.floor(eh), cd=Math.floor(ch/24), cm=Math.floor(cd/30), cy=Math.floor(cd/365);
-  const totalEarned=eh*RPH; // real total earned so far
-  const showD=Math.max(cd+2,7), showM=Math.max(cm+2,3), showY=Math.max(cy+1,2);
-  let curHRow=null;
- 
-  // ---- DAY GROUPS ----
-  for(let d=0;d<showD;d++){
-    const sh=d*24+1, deh=(d+1)*24, gid='d'+d;
-    const done=ch>=deh, curr=!done&&ch>=sh-1, fut=!done&&!curr;
-    let cls='row-group'; if(curr)cls+=' active'; if(fut)cls+=' future';
- 
-    const msTag = d===6?'<span class="ms">1 nedelja!</span>':d===13?'<span class="ms">2 nedelje!</span>':'';
-    const bdg   = curr?'<span class="badge">danas</span>':'';
- 
-    // "Uštedeo u periodu" — for current day show live earned, others show full day or blank
-    const hInDay = curr?(eh-d*24): done?24:0;
-    const dayEarned = hInDay*RPH;
-    const dayCigs   = hInDay*CPH;
- 
-    const periodCol = fut ? '<span class="dim">—</span>' : fmt(done?RPD:dayEarned,0)+' RSD';
-    const cigsCol   = fut ? '<span class="dim">—</span>' : fmt(done?CPD:dayCigs,1);
- 
-    // "Ukupno zarađeno" — real cumulative up to end of this day (if done), or real total so far (if curr), or blank (if future)
-    const totalCol  = fut ? '<span class="dim">—</span>'
-                    : done ? fmt((d+1)*RPD,0)+' RSD'
-                    : fmt(totalEarned,0)+' RSD';
- 
-    const tr=mkrow([
-      '<i class="ti">▶</i>'+(d+1)+'. dan'+bdg+msTag,
-      periodCol, cigsCol, totalCol
-    ], cls, gid, null, true);
-    tbody.appendChild(tr);
- 
-    // Hour children
-    for(let h=sh;h<=deh;h++){
-      const isc=h===ch+1, isp=h<=ch;
-      const hcls=isc?'row-current':isp?'row-past':'';
-      const hbd=isc?'<span class="badge">sada</span>':'';
-      const hInDay2=h-d*24;
-      const hTotal = isc ? fmt(totalEarned,0)+' RSD' : isp ? fmt(h*RPH,0)+' RSD' : '<span class="dim">—</span>';
-      const hr=mkrow([
-        hInDay2+'. sat'+hbd,
-        isp||isc ? '+ '+fmt(RPH,1)+' RSD' : '<span class="dim">—</span>',
-        isp||isc ? fmt(h*CPH,1) : '<span class="dim">—</span>',
-        hTotal
-      ], hcls, null, gid, false);
-      tbody.appendChild(hr);
-      if(isc)curHRow=hr;
-      if(curr){ hr.classList.add('open'); tr.dataset.open='1'; const ic=tr.querySelector('.ti'); if(ic)ic.textContent='▼'; }
+(function() {
+
+  var START    = new Date('2026-03-31T22:00:00');
+  var RPH      = 440 / 24;
+  var CPH      = 20  / 24;
+  var RPD      = 440;
+  var CPD      = 20;
+  var lastHour = -1;
+
+  // Prikazuj X godina unapred od danas
+  var YEARS_AHEAD = 5;
+
+  var DANI    = ['Ned','Pon','Uto','Sre','Čet','Pet','Sub'];
+  var MES_NOM = ['Januar','Februar','Mart','April','Maj','Jun','Jul','Avgust','Septembar','Oktobar','Novembar','Decembar'];
+
+  function daysInMonth(y, m) { return new Date(y, m + 1, 0).getDate(); }
+
+  function fmt(n, d) {
+    d = (d === undefined) ? 0 : d;
+    return n.toLocaleString('sr-RS', {minimumFractionDigits: d, maximumFractionDigits: d});
+  }
+  function fmtDur(ms) {
+    var m = Math.floor(ms / 60000);
+    return Math.floor(m / 60) + 'h ' + (m % 60) + 'm';
+  }
+  function fmtDate(d) {
+    var dd = d.getDate(), mm = d.getMonth() + 1;
+    return (dd < 10 ? '0'+dd : dd) + '.' + (mm < 10 ? '0'+mm : mm) + '.';
+  }
+  function sameDay(a, b) {
+    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  }
+  function milestone(date) {
+    var diff = date - new Date(2026, 2, 31);
+    if (diff < 0) return '';
+    var days = Math.round(diff / 86400000);
+    if (days === 6)   return '<span class="ms">1 nedelja!</span>';
+    if (days === 13)  return '<span class="ms">2 nedelje!</span>';
+    if (days === 29)  return '<span class="ms">1 mesec!</span>';
+    if (days === 89)  return '<span class="ms">3 meseca!</span>';
+    if (days === 179) return '<span class="ms">6 meseci!</span>';
+    if (days === 364) return '<span class="ms">1 godina!</span>';
+    return '';
+  }
+  function dim() { return '<span class="dim">—</span>'; }
+
+  // Koliko ms je ostvareno između dva datuma, ali ne pre START
+  function earnedMs(from, to, now) {
+    var ef = Math.max(START, from);
+    var et = Math.min(now, to);
+    return Math.max(0, et - ef);
+  }
+
+  function toggle(gid) {
+    var btn  = document.querySelector('[data-gid="' + gid + '"]');
+    var open = btn && btn.dataset.open === '1';
+    document.querySelectorAll('[data-pid="' + gid + '"]').forEach(function(r) {
+      open ? r.classList.remove('open') : r.classList.add('open');
+      if (open && r.dataset.gid) {
+        document.querySelectorAll('[data-pid="' + r.dataset.gid + '"]').forEach(function(c) { c.classList.remove('open'); });
+        r.dataset.open = '0';
+        var ic = r.querySelector('.ti'); if (ic) ic.textContent = '▶';
+      }
+    });
+    if (btn) {
+      btn.dataset.open = open ? '0' : '1';
+      var ic = btn.querySelector('.ti'); if (ic) ic.textContent = open ? '▶' : '▼';
     }
   }
- 
-  // ---- MONTH GROUPS ----
-  for(let m=0;m<showM;m++){
-    const msd=m*30, med=(m+1)*30;
-    if(cd<msd-7&&m>cm+1)continue;
-    const gid='m'+m;
-    const done=cd>=med, curr=!done&&cd>=msd, fut=!done&&!curr;
-    let cls='row-group'; if(curr)cls+=' active'; if(fut)cls+=' future';
- 
-    const msTag = m===0?'<span class="ms">1 mesec!</span>':m===2?'<span class="ms">3 meseca!</span>':m===5?'<span class="ms">6 meseci!</span>':m===11?'<span class="ms">1 godina!</span>':'';
-    const bdg   = curr?'<span class="badge">ovaj mesec</span>':'';
- 
-    const hInMonth = curr?(eh-msd*24): done?med*24:0;
-    const mEarned  = hInMonth*RPH;
-    const mCigs    = hInMonth*CPH;
- 
-    const periodCol = fut ? '<span class="dim">—</span>' : fmt(done?RPM:mEarned,0)+' RSD';
-    const cigsCol   = fut ? '<span class="dim">—</span>' : fmt(done?CPM:mCigs,1);
-    const totalCol  = fut ? '<span class="dim">—</span>'
-                    : done ? fmt(med*RPD,0)+' RSD'
-                    : fmt(totalEarned,0)+' RSD';
- 
-    const tr=mkrow([
-      '<i class="ti">▶</i>'+(m+1)+'. mesec'+bdg+msTag,
-      periodCol, cigsCol, totalCol
-    ], cls, gid, null, true);
-    tbody.appendChild(tr);
- 
-    for(let d=msd;d<med;d++){
-      const dc=cd>d, dcu=cd===d, dfu=cd<d;
-      const db=dcu?'<span class="badge">danas</span>':'';
-      const dTotal = dfu ? '<span class="dim">—</span>'
-                   : dcu ? fmt(totalEarned,0)+' RSD'
-                   : fmt((d+1)*RPD,0)+' RSD';
-      const dr=mkrow([
-        (d+1)+'. dan'+db,
-        dfu?'<span class="dim">—</span>':fmt(RPD,0)+' RSD',
-        dfu?'<span class="dim">—</span>':fmt(CPD,0),
-        dTotal
-      ], dc?'row-past':dcu?'row-current':'', null, gid, false);
-      tbody.appendChild(dr);
-    }
+
+  function mkrow(cells, cls, gid, pid, tog) {
+    var tr = document.createElement('tr');
+    var c = cls;
+    if (pid) { tr.dataset.pid = pid; c += ' child'; }
+    if (gid) tr.dataset.gid = gid;
+    tr.className = c;
+    cells.forEach(function(h) { var td = document.createElement('td'); td.innerHTML = h; tr.appendChild(td); });
+    if (tog) tr.addEventListener('click', function() { toggle(gid); });
+    return tr;
   }
- 
-  // ---- YEAR GROUPS ----
-  for(let y=0;y<showY;y++){
-    const ysd=y*365, yed=(y+1)*365;
-    if(cd<ysd-30&&y>cy+1)continue;
-    const gid='y'+y;
-    const done=cd>=yed, curr=!done&&cd>=ysd, fut=!done&&!curr;
-    let cls='row-group'; if(curr)cls+=' active'; if(fut)cls+=' future';
-    const bdg=curr?'<span class="badge">ova godina</span>':'';
- 
-    const hInYear = curr?(eh-ysd*24): done?yed*24:0;
-    const yEarned = hInYear*RPH;
-    const yCigs   = hInYear*CPH;
- 
-    const periodCol = fut ? '<span class="dim">—</span>' : fmt(done?RPY:yEarned,0)+' RSD';
-    const cigsCol   = fut ? '<span class="dim">—</span>' : fmt(done?CPY:yCigs,0);
-    const totalCol  = fut ? '<span class="dim">—</span>'
-                    : done ? fmt(yed*RPD,0)+' RSD'
-                    : fmt(totalEarned,0)+' RSD';
- 
-    const tr=mkrow([
-      '<i class="ti">▶</i>'+(y+1)+'. godina'+bdg,
-      periodCol, cigsCol, totalCol
-    ], cls, gid, null, true);
-    tbody.appendChild(tr);
- 
-    for(let m=y*12;m<(y+1)*12;m++){
-      const msd2=m*30, med2=(m+1)*30;
-      const mc=cd>=med2, mcu=!mc&&cd>=msd2, mfu=cd<msd2;
-      const mb=mcu?'<span class="badge">ovaj mesec</span>':'';
-      const mTotal = mfu ? '<span class="dim">—</span>'
-                   : mcu ? fmt(totalEarned,0)+' RSD'
-                   : fmt(med2*RPD,0)+' RSD';
-      const mr=mkrow([
-        (m+1)+'. mesec'+mb,
-        mfu?'<span class="dim">—</span>':fmt(RPM,0)+' RSD',
-        mfu?'<span class="dim">—</span>':fmt(CPM,0),
-        mTotal
-      ], mc?'row-past':mcu?'row-current':'', null, gid, false);
-      tbody.appendChild(mr);
+
+  function buildTable(now) {
+    var tbody   = document.getElementById('tbody');
+    tbody.innerHTML = '';
+    var today   = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var curHRow = null;
+
+    // Opseg: od 2026 do danas + YEARS_AHEAD godina
+    var fromYear = 2026;
+    var toYear   = now.getFullYear() + YEARS_AHEAD;
+
+    for (var y = fromYear; y <= toYear; y++) {
+
+      var yearStart = new Date(y, 0, 1);
+      var yearEnd   = new Date(y + 1, 0, 1);
+      var ygid      = 'y' + y;
+      var isYCurr   = (y === now.getFullYear());
+      var isYDone   = (now >= yearEnd);
+      var isYFut    = (now < yearStart);
+      var ycls      = 'row-group' + (isYCurr ? ' active' : '') + (isYFut ? ' future' : '');
+
+      // Ušteđevina SAMO u ovoj godini (ne kumulativno)
+      var yEarnedMs = earnedMs(yearStart, yearEnd, now);
+      var yEarned   = (yEarnedMs / 3600000) * RPH;
+      var yCigs     = yEarned / RPD * CPD;
+
+      var ytr = mkrow([
+        '<i class="ti">▶</i>' + y + '. godina',
+        isYFut ? dim() : fmt(yEarned, 0) + ' RSD',
+        isYFut ? dim() : fmt(yCigs, 0),
+        isYFut ? dim() : fmt(yEarned, 0) + ' RSD'
+      ], ycls, ygid, null, true);
+      tbody.appendChild(ytr);
+
+      if (isYCurr) {
+        ytr.dataset.open = '1';
+        var yic = ytr.querySelector('.ti'); if (yic) yic.textContent = '▼';
+      }
+
+      // Meseci u godini
+      var mFrom = (y === 2026) ? 2 : 0; // počinjemo od marta 2026
+      for (var m = mFrom; m <= 11; m++) {
+
+        // Početak meseca: mart 2026 kreće od 31.03
+        var monthStart = (y === 2026 && m === 2) ? new Date(2026, 2, 31) : new Date(y, m, 1);
+        var monthEnd   = new Date(y, m + 1, 1);
+        var mgid       = 'mo' + y + '_' + m;
+        var isMCurr    = (m === now.getMonth() && y === now.getFullYear());
+        var isMDone    = (now >= monthEnd);
+        var isMFut     = (now < monthStart);
+        var mcls       = 'row-group' + (isMCurr ? ' active' : '') + (isMFut ? ' future' : '');
+        var mbdg       = isMCurr ? '<span class="badge">ovaj mesec</span>' : '';
+
+        // Ušteđevina SAMO u ovom mesecu
+        var mEarnedMs = earnedMs(monthStart, monthEnd, now);
+        var mEarned   = (mEarnedMs / 3600000) * RPH;
+        var mCigs     = mEarned / RPD * CPD;
+
+        var mtr = mkrow([
+          '<i class="ti">▶</i>' + MES_NOM[m] + ' ' + y + mbdg,
+          isMFut ? dim() : fmt(mEarned, 0) + ' RSD',
+          isMFut ? dim() : fmt(mCigs, 1),
+          isMFut ? dim() : fmt(mEarned, 0) + ' RSD'
+        ], mcls, mgid, ygid, true);
+        tbody.appendChild(mtr);
+
+        if (isMCurr) {
+          mtr.classList.add('open');
+          mtr.dataset.open = '1';
+          var mic = mtr.querySelector('.ti'); if (mic) mic.textContent = '▼';
+        }
+
+        // Dani u mesecu
+        var firstDay = (y === 2026 && m === 2) ? 31 : 1;
+        var lastDay  = daysInMonth(y, m);
+
+        for (var dd = firstDay; dd <= lastDay; dd++) {
+          var thisDate = new Date(y, m, dd);
+          var nextDate = new Date(y, m, dd + 1);
+          var isToday  = sameDay(thisDate, today);
+          var isDDone  = (now >= nextDate);
+          var isDFut   = (now < thisDate);
+
+          var dcls = 'grandchild' + (isToday ? ' row-current' : isDDone ? ' row-past' : '');
+
+          // Ušteđevina SAMO u ovom danu
+          var dEarnedMs = earnedMs(thisDate, nextDate, now);
+          var dEarned   = (dEarnedMs / 3600000) * RPH;
+          var dCigs     = dEarned / RPD * CPD;
+
+          var dayName = DANI[thisDate.getDay()];
+          var msTag   = milestone(thisDate);
+          var tbdg    = isToday ? '<span class="badge">danas</span>' : '';
+
+          var dr = mkrow([
+            dayName + ' ' + fmtDate(thisDate) + tbdg + msTag,
+            isDFut ? dim() : fmt(dEarned, 0) + ' RSD',
+            isDFut ? dim() : fmt(dCigs, 1),
+            isDFut ? dim() : fmt(dEarned, 0) + ' RSD'
+          ], dcls, null, mgid, false);
+          tbody.appendChild(dr);
+
+          if (isToday) { curHRow = dr; dr.classList.add('open'); }
+          else if (isDDone) { dr.classList.add('open'); }
+        }
+      }
     }
+
+    if (curHRow) setTimeout(function() { curHRow.scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300);
   }
- 
-  if(curHRow)setTimeout(()=>curHRow.scrollIntoView({behavior:'smooth',block:'center'}),200);
-}
- 
-function updateLive(eh){
-  const cd=Math.floor(eh/24), cm=Math.floor(cd/30), cy=Math.floor(cd/365);
-  const hDay=eh-cd*24, hMonth=eh-cm*30*24, hYear=eh-cy*365*24;
-  const eDay=hDay*RPH, eMonth=hMonth*RPH, eYear=hYear*RPH;
- 
-  document.getElementById('lv-day').textContent   = fmt(eDay,0)+' RSD';
-  document.getElementById('lv-month').textContent = fmt(eMonth,0)+' RSD';
-  document.getElementById('lv-year').textContent  = fmt(eYear,0)+' RSD';
-  document.getElementById('lc-day').textContent   = fmt(hDay*CPH,1)+' cigareta';
-  document.getElementById('lc-month').textContent = fmt(hMonth*CPH,1)+' cigareta';
-  document.getElementById('lc-year').textContent  = fmt(hYear*CPH,0)+' cigareta';
-  document.getElementById('lo-day').textContent   = 'od '+fmt(RPD,0)+' RSD';
-  document.getElementById('lo-month').textContent = 'od '+fmt(RPM,0)+' RSD';
-  document.getElementById('lo-year').textContent  = 'od '+fmt(RPY,0)+' RSD';
-  document.getElementById('lb-day').style.width   = Math.min(100,(hDay/24)*100).toFixed(2)+'%';
-  document.getElementById('lb-month').style.width = Math.min(100,(hMonth/(30*24))*100).toFixed(2)+'%';
-  document.getElementById('lb-year').style.width  = Math.min(100,(hYear/(365*24))*100).toFixed(2)+'%';
-}
- 
-let lastHour=-1;
- 
-function update(){
-  const now=new Date(), ms=now-START;
-  if(ms<0)return;
-  const eh=ms/3600000, ch=Math.floor(eh), frac=eh-ch;
-  const days=Math.floor(ms/86400000);
- 
-  document.getElementById('elapsed').textContent  = fmtDur(ms);
-  document.getElementById('days-label').textContent = days===0?'danas':days+(days===1?' dan':' dana');
-  document.getElementById('saved').textContent    = fmt(eh*RPH,0)+' RSD';
-  document.getElementById('cig-count').textContent= fmt(eh*CPH,1)+' cigareta manje';
-  document.getElementById('next-save').textContent= fmt(RPH,0)+' RSD';
-  document.getElementById('next-in').textContent  = 'za '+Math.ceil((1-frac)*60)+' min';
-  document.getElementById('progress-fill').style.width = Math.round(frac*100)+'%';
-  document.getElementById('progress-pct').textContent  = Math.round(frac*100)+'%';
- 
-  updateLive(eh);
-  if(ch!==lastHour){ buildTable(eh); lastHour=ch; }
-}
- 
-update();
-setInterval(update, 10000);
+
+  function updateLive(now) {
+    var ms          = now - START;
+    var eh          = ms / 3600000;
+
+    // Danas: od ponoći
+    var todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var dayMs       = earnedMs(todayMidnight, new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1), now);
+    var dayEarned   = (dayMs / 3600000) * RPH;
+
+    // Ovaj mesec
+    var mStart      = (now.getFullYear() === 2026 && now.getMonth() === 2) ? new Date(2026, 2, 31) : new Date(now.getFullYear(), now.getMonth(), 1);
+    var mEnd        = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+    var monthMs     = earnedMs(mStart, mEnd, now);
+    var monthEarned = (monthMs / 3600000) * RPH;
+    var numDays     = daysInMonth(now.getFullYear(), now.getMonth());
+
+    // Ova godina
+    var yStart      = (now.getFullYear() === 2026) ? new Date(2026, 2, 31) : new Date(now.getFullYear(), 0, 1);
+    var yEnd        = new Date(now.getFullYear() + 1, 0, 1);
+    var yearMs      = earnedMs(yStart, yEnd, now);
+    var yearEarned  = (yearMs / 3600000) * RPH;
+
+    document.getElementById('lv-day').textContent   = fmt(dayEarned, 0) + ' RSD';
+    document.getElementById('lv-month').textContent = fmt(monthEarned, 0) + ' RSD';
+    document.getElementById('lv-year').textContent  = fmt(yearEarned, 0) + ' RSD';
+    document.getElementById('lc-day').textContent   = fmt(dayEarned / RPD * CPD, 1) + ' cigareta';
+    document.getElementById('lc-month').textContent = fmt(monthEarned / RPD * CPD, 1) + ' cigareta';
+    document.getElementById('lc-year').textContent  = fmt(yearEarned / RPD * CPD, 0) + ' cigareta';
+    document.getElementById('lo-day').textContent   = 'od 440 RSD';
+    document.getElementById('lo-month').textContent = 'od ' + fmt(numDays * RPD, 0) + ' RSD';
+    document.getElementById('lo-year').textContent  = 'od ' + fmt(365 * RPD, 0) + ' RSD';
+    document.getElementById('lb-day').style.width   = Math.min(100, (dayMs / 86400000) * 100).toFixed(2) + '%';
+    document.getElementById('lb-month').style.width = Math.min(100, (monthMs / (numDays * 86400000)) * 100).toFixed(2) + '%';
+    document.getElementById('lb-year').style.width  = Math.min(100, (yearMs / (365 * 86400000)) * 100).toFixed(2) + '%';
+
+    document.getElementById('live-month-label').textContent = MES_NOM[now.getMonth()] + ' ' + now.getFullYear();
+    document.getElementById('live-year-label').textContent  = 'Godina ' + now.getFullYear();
+  }
+
+  function update() {
+    var now  = new Date();
+    var ms   = now - START;
+    if (ms < 0) return;
+    var eh   = ms / 3600000;
+    var ch   = Math.floor(eh);
+    var frac = eh - ch;
+    var days = Math.floor(ms / 86400000);
+
+    document.getElementById('elapsed').textContent    = fmtDur(ms);
+    document.getElementById('days-label').textContent = days === 0 ? 'danas' : days + (days === 1 ? ' dan' : ' dana');
+    document.getElementById('saved').textContent      = fmt(eh * RPH, 0) + ' RSD';
+    document.getElementById('cig-count').textContent  = fmt(eh * CPH, 1) + ' cigareta manje';
+    document.getElementById('next-save').textContent  = fmt(RPH, 0) + ' RSD';
+    document.getElementById('next-in').textContent    = 'za ' + Math.ceil((1 - frac) * 60) + ' min';
+    document.getElementById('progress-fill').style.width = Math.round(frac * 100) + '%';
+    document.getElementById('progress-pct').textContent  = Math.round(frac * 100) + '%';
+
+    updateLive(now);
+    if (ch !== lastHour) { buildTable(now); lastHour = ch; }
+  }
+
+  update();
+  setInterval(update, 10000);
+
 })();
 </script>
 </body>
